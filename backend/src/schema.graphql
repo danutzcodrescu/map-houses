@@ -1,0 +1,17 @@
+type Offers {
+  zipCode: Int!
+  houses: Int!
+}
+
+type House {
+  externalId: String
+  price: Int
+  surface: Int
+  rooms: Int
+  zipCode: String
+}
+
+type Query {
+  getRegions: [Offers]
+  getHousesPerZipCode(zipCode: Int!): [House]
+}

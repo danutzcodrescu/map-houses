@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  mapbox:
+    'pk.eyJ1Ijoid2lsZG1hbjJiYWQiLCJhIjoiY2pucTBsaDQxMHF1OTNwb2N5dWRvcnpwaiJ9.ik0GI4W90f4QidHT9fXZaQ',
+  graphql: 'http://localhost:3000/graphql'
 };
 
 /*
