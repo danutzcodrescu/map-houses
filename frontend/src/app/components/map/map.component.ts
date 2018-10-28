@@ -2,7 +2,15 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { MapService, GetRegions } from 'src/app/services/map/map.service';
 import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
-import { tap } from 'rxjs/operators';
+
+const GET_REGIONS = gql`
+  query getRegions {
+    getRegions {
+      zipCode
+      houses
+    }
+  }
+`;
 
 @Component({
   selector: 'app-map',
@@ -18,14 +26,7 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     this.apollo
       .query<{ getRegions: GetRegions[] }>({
-        query: gql`
-          query getRegions {
-            getRegions {
-              zipCode
-              houses
-            }
-          }
-        `
+        query: GET_REGIONS
       })
       .subscribe(val => {
         this.map.addPoligons(val.data.getRegions);

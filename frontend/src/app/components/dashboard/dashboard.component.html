@@ -1,0 +1,29 @@
+<div class="dashboard" [ngStyle]="{'right': (isDashboardOpen$ | async) ? 0 : '-33vw'}">
+  <button (click)="toggleDashboard()">
+    {{ (isDashboardOpen$ | async) ? ">" : "<" }} </button> <table mat-table [dataSource]="(dataSource | async)" class="houses-table mat-elevation-z8">
+
+      <ng-container matColumnDef="price">
+        <div *matHeaderCellDef>Price</div>
+        <div *matCellDef="let house">{{house.price | number}}</div>
+      </ng-container>
+
+      <ng-container matColumnDef="rooms">
+        <div *matHeaderCellDef>Nb of rooms</div>
+        <div *matCellDef="let house">{{house.rooms}}</div>
+      </ng-container>
+
+      <ng-container matColumnDef="surface">
+        <div *matHeaderCellDef>Surface</div>
+        <div *matCellDef="let house">{{house.surface}}</div>
+      </ng-container>
+
+      <ng-container matColumnDef="link">
+        <div *matHeaderCellDef>Link</div>
+        <div *matCellDef="let house"><a href={{house.url}}>Link</a></div>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </table>
+</div>

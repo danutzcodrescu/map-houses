@@ -7,10 +7,26 @@ import { MapComponent } from './components/map/map.component';
 import { MapService } from './services/map/map.service';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MatTableModule,
+  MatSortModule,
+  MatProgressSpinnerModule
+} from '@angular/material';
 
 @NgModule({
-  declarations: [AppComponent, MapComponent],
-  imports: [BrowserModule, AppRoutingModule, GraphQLModule, HttpClientModule],
+  declarations: [AppComponent, MapComponent, DashboardComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    GraphQLModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatSortModule,
+    MatProgressSpinnerModule
+  ],
   providers: [MapService],
   bootstrap: [AppComponent]
 })
