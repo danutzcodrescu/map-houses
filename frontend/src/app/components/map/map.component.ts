@@ -1,7 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { MapService } from 'src/app/services/map.service';
+import { MapService, GetRegions } from 'src/app/services/map/map.service';
 import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-map',
@@ -12,13 +13,11 @@ export class MapComponent implements OnInit {
   @ViewChild('map')
   mapElement: ElementRef;
 
-  constructor(private map: MapService, private apollo: Apollo) {
-    this.map = map;
-  }
+  constructor(private map: MapService, private apollo: Apollo) {}
 
   ngOnInit() {
     this.apollo
-      .query({
+      .query<{ getRegions: GetRegions[] }>({
         query: gql`
           query getRegions {
             getRegions {
@@ -28,8 +27,9 @@ export class MapComponent implements OnInit {
           }
         `
       })
-      .subscribe(val => console.log(val));
+      .subscribe(val => {
+        this.map.addPoligons(val.data.getRegions);
+      });
     this.map.createMap(this.mapElement.nativeElement);
-    this.map.addPoligons();
   }
 }

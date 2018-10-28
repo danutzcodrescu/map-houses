@@ -1,0 +1,59 @@
+/* You can add global styles to this file, and also import other style files */
+$font-family-sans: "Montserrat", sans-serif;
+
+.postcard-marker {
+  padding: 10px;
+  font-family: $font-family-sans;
+  position: relative;
+  background: no-repeat url("/assets/marker.svg");
+
+  &:hover {
+    opacity: 0.8 !important;
+  }
+
+  &:visited {
+    background-color: transparent;
+  }
+
+  .oval {
+    border-radius: 50%;
+    background-size: cover;
+    width: 28px;
+    height: 28px;
+    margin-right: 2px;
+    margin-top: -2px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 26px;
+    text-align: center;
+  }
+}
+
+.marker-cluster {
+  background: no-repeat url("/assets/marker.svg");
+  padding: 2px;
+  background-color: transparent;
+  width: 50px !important;
+  height: 50px !important;
+
+  &:hover {
+    opacity: 0.8 !important;
+  }
+
+  &:visited {
+    background-color: transparent;
+  }
+
+  div {
+    font-family: $font-family-sans;
+    background-color: transparent;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 26px;
+    margin-right: 4px;
+    margin-top: 4px;
+    text-align: center;
+  }
+}
