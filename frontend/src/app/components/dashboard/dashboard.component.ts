@@ -30,6 +30,8 @@ const GET_HOUSES_PER_ZIPCODE = gql`
       price
       rooms
       surface
+      url
+      externalId
     }
   }
 `;
@@ -43,7 +45,7 @@ export class DashboardComponent implements OnInit {
   isDashboardOpen$: Observable<ApolloQueryResult<boolean>>;
   private zipCode$: Observable<number>;
   dataSource: Observable<any[]>;
-  displayedColumns = ['price', 'rooms', 'surface', 'link'];
+  displayedColumns = ['price', 'rooms', 'surface', 'url'];
   private zipCode: number = null;
 
   constructor(private apollo: Apollo) {}
@@ -76,5 +78,9 @@ export class DashboardComponent implements OnInit {
         mutation: TOGGLE_DASHBOARD
       })
       .subscribe();
+  }
+
+  getRecord(row: any) {
+    console.log(row.externalId);
   }
 }

@@ -9,6 +9,7 @@ type House {
   surface: Int
   rooms: Int
   zipCode: String
+  url: String
 }
 
 type Query {

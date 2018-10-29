@@ -17,13 +17,13 @@
         <div *matCellDef="let house">{{house.surface}}</div>
       </ng-container>
 
-      <ng-container matColumnDef="link">
+      <ng-container matColumnDef="url">
         <div *matHeaderCellDef>Link</div>
-        <div *matCellDef="let house"><a href={{house.url}}>Link</a></div>
+        <div *matCellDef="let house"><a href="{{house.url}}" target="__blank">Link</a></div>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns" (click)="getRecord(row)" class="table-row"></mat-row>
       </table>
 </div>

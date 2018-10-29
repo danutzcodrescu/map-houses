@@ -1,4 +1,5 @@
 export const defaults = {
   zip: null,
-  isDashboardOpen: false
+  isDashboardOpen: false,
+  selectedHouse: null
 };

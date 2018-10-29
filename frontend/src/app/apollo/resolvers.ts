@@ -17,6 +17,11 @@ export const resolvers = {
       const status = cache.readQuery({ query: isDashboardOpen });
       cache.writeData({ data: { isDashboardOpen: !status.isDashboardOpen } });
       return status;
+    },
+
+    getHouseData: (_, { externalId }, { cache }) => {
+      cache.writeData({ data: { selectedHouse: externalId } });
+      return externalId;
     }
   }
 };

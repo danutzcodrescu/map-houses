@@ -14,9 +14,10 @@ import {
   MatSortModule,
   MatProgressSpinnerModule
 } from '@angular/material';
+import { SelectedHouseComponent } from './components/selected-house/selected-house.component';
 
 @NgModule({
-  declarations: [AppComponent, MapComponent, DashboardComponent],
+  declarations: [AppComponent, MapComponent, DashboardComponent, SelectedHouseComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
