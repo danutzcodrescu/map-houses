@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import * as L from 'leaflet';
 import { environment } from '../../../environments/environment';
 import * as communities from '../../../assets/belgium.zips.json';
-import * as _ from 'lodash';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
 import * as turf from '@turf/turf';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import * as _ from 'lodash';
 
 export interface GetRegions {
   houses: number;

@@ -17,9 +17,18 @@ import {
 import { SelectedHouseComponent } from './components/selected-house/selected-house.component';
 import { HouseTableComponent } from './components/house-table/house-table.component';
 import { CommuneChartComponent } from './components/commune-chart/commune-chart.component';
+import { NumberOfDaysPipe } from './pipes/number-of-days.pipe';
 
 @NgModule({
-  declarations: [AppComponent, MapComponent, DashboardComponent, SelectedHouseComponent, HouseTableComponent, CommuneChartComponent],
+  declarations: [
+    AppComponent,
+    MapComponent,
+    DashboardComponent,
+    SelectedHouseComponent,
+    HouseTableComponent,
+    CommuneChartComponent,
+    NumberOfDaysPipe
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

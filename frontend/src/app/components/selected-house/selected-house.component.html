@@ -1,7 +1,7 @@
 <button (click)="back()">Back</button>
 
 <div #chart></div>
-<div>Price: {{(house$ | async)?.price | number }} euro</div>
+<div>Price: {{(house$ | async)?.price | number }} €</div>
 <div>Surface: {{(house$ | async)?.surface }} m<sup>2</sup></div>
 <div>Rooms: {{(house$ | async)?.rooms }}</div>
 <a href="{{(house$ | async)?.url }}">Link to ImmoWeb</a>

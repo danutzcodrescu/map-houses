@@ -23,6 +23,7 @@ const GET_COMMUNE_DATA = gql`
     getCommuneStatistics(zipCode: $zipCode) {
       dailyAverage {
         avg_price
+        avg_surface
         date
       }
       onMarketAvg
