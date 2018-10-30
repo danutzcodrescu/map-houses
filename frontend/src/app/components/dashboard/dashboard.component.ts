@@ -49,7 +49,7 @@ const GET_HOUSES_PER_ZIPCODE = gql`
 })
 export class DashboardComponent implements OnInit {
   isDashboardOpen$: Observable<ApolloQueryResult<boolean>>;
-  private zipCode$: Observable<number>;
+  zipCode$: Observable<number>;
   selectedHouse$: Observable<ApolloQueryResult<string>>;
   dataSource: Observable<any[]>;
 

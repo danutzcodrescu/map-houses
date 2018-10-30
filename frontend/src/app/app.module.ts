@@ -16,9 +16,10 @@ import {
 } from '@angular/material';
 import { SelectedHouseComponent } from './components/selected-house/selected-house.component';
 import { HouseTableComponent } from './components/house-table/house-table.component';
+import { CommuneChartComponent } from './components/commune-chart/commune-chart.component';
 
 @NgModule({
-  declarations: [AppComponent, MapComponent, DashboardComponent, SelectedHouseComponent, HouseTableComponent],
+  declarations: [AppComponent, MapComponent, DashboardComponent, SelectedHouseComponent, HouseTableComponent, CommuneChartComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -18,8 +18,21 @@ type PriceData {
   price: Int
 }
 
+type DailyAverage {
+  date: String
+  avg_price: Float
+  avg_surface: Float
+  avg_nb_rooms: Float
+}
+
+type CommuneStatistics {
+  dailyAverage: [DailyAverage]
+  onMarketAvg: Float
+}
+
 type Query {
   getRegions: [Offers]
   getHousesPerZipCode(zipCode: Int!): [House]
   getHouseData(externalId: ID!): House
+  getCommuneStatistics(zipCode: Int!): CommuneStatistics
 }

@@ -1,6 +1,7 @@
 <div class="dashboard" [ngStyle]="{'right': (isDashboardOpen$ | async) ? 0 : '-33vw'}">
   <button (click)="toggleDashboard()">
     {{ (isDashboardOpen$ | async) ? ">" : "<" }} </button> <ng-container *ngIf="!(selectedHouse$ | async); else house">
+      <app-commune-chart></app-commune-chart>
       <app-house-table [dataSource]="(dataSource | async)">
       </app-house-table>
       </ng-container>

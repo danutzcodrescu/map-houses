@@ -39,5 +39,72 @@ export const Query = {
     console.log(house);
     house.prices = prices;
     return house;
+  },
+
+  getCommuneStatistics: async (_: any, args: any) => {
+    const avgs: any = House.aggregate([
+      {
+        $match: {
+          zipCode: args.zipCode
+        }
+      },
+      {
+        $group: {
+          _id: {
+            month: {
+              $month: "$createdAt"
+            },
+            day: {
+              $dayOfMonth: "$createdAt"
+            },
+            year: {
+              $year: "$createdAt"
+            }
+          },
+          avg_price: {
+            $avg: "$price"
+          },
+          avg_surface: {
+            $avg: "$surface"
+          },
+          avg_nb_rooms: {
+            $avg: "$rooms"
+          }
+        }
+      }
+    ]);
+    const onMarket: any = House.aggregate([
+      {
+        $match: {
+          zipCode: args.zipCode
+        }
+      },
+      {
+        $group: {
+          _id: "$externalId",
+          first: { $first: "$createdAt" },
+          last: { $last: "$createdAt" }
+        }
+      },
+      {
+        $addFields: {
+          difference: { $subtract: ["$last", "$first"] }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          avg: { $avg: "$difference" }
+        }
+      }
+    ]);
+    const [avgsResult, onMarketResult] = await Promise.all([avgs, onMarket]);
+    return {
+      dailyAverage: avgsResult.map((elem: any) => ({
+        ...elem,
+        date: new Date(elem._id.year, elem._id.month, elem._id.day)
+      })),
+      onMarketAvg: onMarketResult[0].avg
+    };
   }
 };

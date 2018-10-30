@@ -1,9 +1,15 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  OnDestroy
+} from '@angular/core';
 import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ApolloQueryResult } from 'apollo-client';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, takeUntil } from 'rxjs/operators';
 import ApexCharts from 'apexcharts';
 
 const SELECTED_HOUSE_MUTATION = gql`
@@ -38,10 +44,12 @@ const GET_HOUSE_DATA = gql`
   templateUrl: './selected-house.component.html',
   styleUrls: ['./selected-house.component.scss']
 })
-export class SelectedHouseComponent implements OnInit {
+export class SelectedHouseComponent implements OnInit, OnDestroy {
   house$: Observable<ApolloQueryResult<any>>;
   @ViewChild('chart')
   chart: ElementRef;
+
+  private unsubscribe$ = new Subject();
 
   private options = {
     chart: {
@@ -58,6 +66,25 @@ export class SelectedHouseComponent implements OnInit {
       style: {
         fontWeight: 'bold',
         fontSize: '18px'
+      }
+    },
+    xaxis: {
+      type: 'datetime'
+    },
+    yaxis: {
+      labels: {
+        formatter: function(val) {
+          return val.toFixed(0);
+        }
+      }
+    },
+    tooltip: {
+      shared: false,
+      title: 'Avg price: ',
+      y: {
+        formatter: function(val) {
+          return `${val.toFixed(0)} euro`;
+        }
       }
     }
   };
@@ -79,7 +106,7 @@ export class SelectedHouseComponent implements OnInit {
         map((resp: any) => resp.data.getHouseData)
       );
 
-    this.house$.subscribe((house: any) => {
+    this.house$.pipe(takeUntil(this.unsubscribe$)).subscribe((house: any) => {
       const chart = new ApexCharts(this.chart.nativeElement, {
         ...this.options,
         series: [
@@ -90,10 +117,7 @@ export class SelectedHouseComponent implements OnInit {
               price.price
             ])
           }
-        ],
-        xaxis: {
-          type: 'datetime'
-        }
+        ]
       });
 
       chart.render();
@@ -101,6 +125,14 @@ export class SelectedHouseComponent implements OnInit {
   }
 
   back() {
-    this.apollo.mutate({ mutation: SELECTED_HOUSE_MUTATION }).subscribe();
+    this.apollo
+      .mutate({ mutation: SELECTED_HOUSE_MUTATION })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

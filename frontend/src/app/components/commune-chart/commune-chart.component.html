@@ -1,0 +1,3 @@
+<div>Average period on the market: {{(communeData$ | async)?.onMarketAvg}}</div>
+<div>Avg surface: {{(communeData$ | async)?.dailyAverage[0]?.avg_surface | number}} m<sup>2</sup></div>
+<div #chart></div>

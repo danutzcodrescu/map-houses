@@ -3,11 +3,14 @@
 $width: 23px;
 
 .dashboard {
-  height: $height;
+  height: 100vh;
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 10px;
   width: 33vw;
   position: fixed;
   transition: all 0.5s ease;
-  top: calc(#{$topBar} - 10px);
+  top: 0px;
   z-index: 9999;
   background-color: white;
   div {
