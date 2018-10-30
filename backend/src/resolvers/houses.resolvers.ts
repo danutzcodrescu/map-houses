@@ -1,5 +1,4 @@
 import House from "../models/houses.model";
-import { QueryResolvers } from "../generated/graphqlgen";
 
 export const Query = {
   getRegions: async () => {

@@ -5,7 +5,8 @@
   "main": "src/server.ts",
   "scripts": {
     "dev": "nodemon",
-    "generate": "graphqlgen"
+    "generate": "graphqlgen",
+    "build": "tsc"
   },
   "author": "Danut Codrescu",
   "license": "MIT",
