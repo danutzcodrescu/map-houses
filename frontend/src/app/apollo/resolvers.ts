@@ -19,7 +19,7 @@ export const resolvers = {
       return status;
     },
 
-    getHouseData: (_, { externalId }, { cache }) => {
+    selectedHouse: (_, { externalId }, { cache }) => {
       cache.writeData({ data: { selectedHouse: externalId } });
       return externalId;
     }

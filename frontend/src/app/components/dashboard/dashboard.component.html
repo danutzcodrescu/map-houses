@@ -1,29 +1,11 @@
 <div class="dashboard" [ngStyle]="{'right': (isDashboardOpen$ | async) ? 0 : '-33vw'}">
   <button (click)="toggleDashboard()">
-    {{ (isDashboardOpen$ | async) ? ">" : "<" }} </button> <table mat-table [dataSource]="(dataSource | async)" class="houses-table mat-elevation-z8">
-
-      <ng-container matColumnDef="price">
-        <div *matHeaderCellDef>Price</div>
-        <div *matCellDef="let house">{{house.price | number}}</div>
+    {{ (isDashboardOpen$ | async) ? ">" : "<" }} </button> <ng-container *ngIf="!(selectedHouse$ | async); else house">
+      <app-house-table [dataSource]="(dataSource | async)">
+      </app-house-table>
       </ng-container>
 
-      <ng-container matColumnDef="rooms">
-        <div *matHeaderCellDef>Nb of rooms</div>
-        <div *matCellDef="let house">{{house.rooms}}</div>
-      </ng-container>
-
-      <ng-container matColumnDef="surface">
-        <div *matHeaderCellDef>Surface</div>
-        <div *matCellDef="let house">{{house.surface}}</div>
-      </ng-container>
-
-      <ng-container matColumnDef="url">
-        <div *matHeaderCellDef>Link</div>
-        <div *matCellDef="let house"><a href="{{house.url}}" target="__blank">Link</a></div>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-
-      <mat-row *matRowDef="let row; columns: displayedColumns" (click)="getRecord(row)" class="table-row"></mat-row>
-      </table>
+      <ng-template #house>
+        <app-selected-house></app-selected-house>
+      </ng-template>
 </div>

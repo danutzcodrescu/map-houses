@@ -24,16 +24,3 @@ $width: 23px;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
   }
 }
-
-.houses-table {
-  width: 100%;
-  .mat-row div,
-  .mat-header-row div {
-    width: 25%;
-    text-align: center;
-  }
-}
-
-.mat-row.table-row {
-  cursor: pointer;
-}

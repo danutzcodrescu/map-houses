@@ -15,9 +15,10 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 import { SelectedHouseComponent } from './components/selected-house/selected-house.component';
+import { HouseTableComponent } from './components/house-table/house-table.component';
 
 @NgModule({
-  declarations: [AppComponent, MapComponent, DashboardComponent, SelectedHouseComponent],
+  declarations: [AppComponent, MapComponent, DashboardComponent, SelectedHouseComponent, HouseTableComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

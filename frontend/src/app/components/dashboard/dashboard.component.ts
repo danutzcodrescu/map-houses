@@ -24,6 +24,12 @@ const ZIPCODE = gql`
   }
 `;
 
+const SELECTED_HOUSE = gql`
+  {
+    selectedHouse @client
+  }
+`;
+
 const GET_HOUSES_PER_ZIPCODE = gql`
   query GetHousesPerZip($zipCode: Int!) {
     getHousesPerZipCode(zipCode: $zipCode) {
@@ -44,23 +50,28 @@ const GET_HOUSES_PER_ZIPCODE = gql`
 export class DashboardComponent implements OnInit {
   isDashboardOpen$: Observable<ApolloQueryResult<boolean>>;
   private zipCode$: Observable<number>;
+  selectedHouse$: Observable<ApolloQueryResult<string>>;
   dataSource: Observable<any[]>;
-  displayedColumns = ['price', 'rooms', 'surface', 'url'];
-  private zipCode: number = null;
 
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
+    this.selectedHouse$ = this.apollo
+      .watchQuery<string>({ query: SELECTED_HOUSE })
+      .valueChanges.pipe(map((result: any) => result.data.selectedHouse));
     this.zipCode$ = this.apollo
       .watchQuery<number>({ query: ZIPCODE })
       .valueChanges.pipe(map((result: any) => parseInt(result.data.zip, 10)));
     this.isDashboardOpen$ = this.apollo
       .watchQuery<boolean>({ query: DASHBOARD_STATUS })
       .valueChanges.pipe(map(result => (result.data as any).isDashboardOpen));
-    this.dataSource = combineLatest(this.isDashboardOpen$, this.zipCode$).pipe(
-      switchMap(([isDashboardOpen, zipCode]) => {
-        if (isDashboardOpen && !_.isNaN(zipCode) && zipCode !== this.zipCode) {
-          this.zipCode = zipCode;
+    this.dataSource = combineLatest(
+      this.selectedHouse$,
+      this.isDashboardOpen$,
+      this.zipCode$
+    ).pipe(
+      switchMap(([selectedHouse, isDashboardOpen, zipCode]) => {
+        if (!selectedHouse && isDashboardOpen && !_.isNaN(zipCode)) {
           return this.apollo.query<any[]>({
             query: GET_HOUSES_PER_ZIPCODE,
             variables: { zipCode }
@@ -78,9 +89,5 @@ export class DashboardComponent implements OnInit {
         mutation: TOGGLE_DASHBOARD
       })
       .subscribe();
-  }
-
-  getRecord(row: any) {
-    console.log(row.externalId);
   }
 }

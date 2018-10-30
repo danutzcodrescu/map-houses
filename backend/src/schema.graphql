@@ -4,15 +4,22 @@ type Offers {
 }
 
 type House {
-  externalId: String
+  externalId: ID
   price: Int
   surface: Int
   rooms: Int
   zipCode: String
   url: String
+  prices: [PriceData]
+}
+
+type PriceData {
+  createdAt: String
+  price: Int
 }
 
 type Query {
   getRegions: [Offers]
   getHousesPerZipCode(zipCode: Int!): [House]
+  getHouseData(externalId: ID!): House
 }

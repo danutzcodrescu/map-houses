@@ -1,0 +1,12 @@
+.houses-table {
+  width: 100%;
+  .mat-row div,
+  .mat-header-row div {
+    width: 25%;
+    text-align: center;
+  }
+}
+
+.mat-row.table-row {
+  cursor: pointer;
+}
