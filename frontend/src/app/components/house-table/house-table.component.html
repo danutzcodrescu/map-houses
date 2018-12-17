@@ -1,26 +1,39 @@
-<table mat-table [dataSource]="dataSource" class="houses-table mat-elevation-z8">
-
+<table
+  mat-table
+  [dataSource]="data"
+  matSort
+  (matSortChange)="sortData($event)"
+  class="houses-table mat-elevation-z8"
+>
   <ng-container matColumnDef="price">
-    <div *matHeaderCellDef>Price</div>
-    <div *matCellDef="let house">{{house.price | number}} €</div>
+    <div *matHeaderCellDef mat-sort-header="price">Price</div>
+    <div *matCellDef="let house">{{ house.price | number }} €</div>
   </ng-container>
 
   <ng-container matColumnDef="rooms">
-    <div *matHeaderCellDef>Nb of rooms</div>
-    <div *matCellDef="let house">{{house.rooms}}</div>
+    <div *matHeaderCellDef mat-sort-header="rooms">Nb of rooms</div>
+    <div *matCellDef="let house">{{ house.rooms }}</div>
   </ng-container>
 
   <ng-container matColumnDef="surface">
-    <div *matHeaderCellDef>Surface</div>
-    <div *matCellDef="let house">{{house.surface}}</div>
+    <div *matHeaderCellDef mat-sort-header="surface">Surface</div>
+    <div *matCellDef="let house">{{ house.surface }}</div>
   </ng-container>
 
   <ng-container matColumnDef="url">
     <div *matHeaderCellDef>Link</div>
-    <div *matCellDef="let house"><a href="{{house.url}}" target="__blank">Link</a></div>
+    <div *matCellDef="let house">
+      <a href="{{house.url}}" target="__blank">Link</a>
+    </div>
   </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+  <mat-header-row
+    *matHeaderRowDef="displayedColumns; sticky: true"
+  ></mat-header-row>
 
-  <mat-row *matRowDef="let row; columns: displayedColumns" (click)="getRecord(row)" class="table-row"></mat-row>
+  <mat-row
+    *matRowDef="let row; columns: displayedColumns"
+    (click)="getRecord(row)"
+    class="table-row"
+  ></mat-row>
 </table>

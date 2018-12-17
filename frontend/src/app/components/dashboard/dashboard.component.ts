@@ -5,6 +5,7 @@ import { Observable, of, combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ApolloQueryResult } from 'apollo-client';
 import * as _ from 'lodash';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
 const DASHBOARD_STATUS = gql`
   {
@@ -31,8 +32,8 @@ const SELECTED_HOUSE = gql`
 `;
 
 const GET_HOUSES_PER_ZIPCODE = gql`
-  query GetHousesPerZip($zipCode: Int!) {
-    getHousesPerZipCode(zipCode: $zipCode) {
+  query GetHousesPerZip($zipCode: Int!, $min: Int, $max: Int) {
+    getHousesPerZipCode(zipCode: $zipCode, min: $min, max: $max) {
       price
       rooms
       surface
@@ -53,7 +54,10 @@ export class DashboardComponent implements OnInit {
   selectedHouse$: Observable<ApolloQueryResult<string>>;
   dataSource: Observable<any[]>;
 
-  constructor(private apollo: Apollo) {}
+  constructor(
+    private apollo: Apollo,
+    private localStorage: LocalStorageService
+  ) {}
 
   ngOnInit() {
     this.selectedHouse$ = this.apollo
@@ -72,9 +76,12 @@ export class DashboardComponent implements OnInit {
     ).pipe(
       switchMap(([selectedHouse, isDashboardOpen, zipCode]) => {
         if (!selectedHouse && isDashboardOpen && !_.isNaN(zipCode)) {
+          const priceRanges = JSON.parse(
+            this.localStorage.get('priceRange')
+          ) || { min: 200_000, max: 500_000 };
           return this.apollo.query<any[]>({
             query: GET_HOUSES_PER_ZIPCODE,
-            variables: { zipCode }
+            variables: { zipCode, min: priceRanges.min, max: priceRanges.max }
           });
         }
         return of({ data: { getHousesPerZipCode: [] } }) as any;

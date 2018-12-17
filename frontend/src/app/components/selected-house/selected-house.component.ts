@@ -10,7 +10,7 @@ import { Apollo } from 'apollo-angular';
 import { Observable, Subject } from 'rxjs';
 import { ApolloQueryResult } from 'apollo-client';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
-import ApexCharts from 'apexcharts';
+import * as ApexCharts from 'apexcharts';
 
 const SELECTED_HOUSE_MUTATION = gql`
   mutation SelectedHouse {

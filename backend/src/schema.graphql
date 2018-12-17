@@ -32,7 +32,7 @@ type CommuneStatistics {
 
 type Query {
   getRegions: [Offers]
-  getHousesPerZipCode(zipCode: Int!): [House]
+  getHousesPerZipCode(zipCode: Int!, min: Int, max: Int): [House]
   getHouseData(externalId: ID!): House
   getCommuneStatistics(zipCode: Int!): CommuneStatistics
 }

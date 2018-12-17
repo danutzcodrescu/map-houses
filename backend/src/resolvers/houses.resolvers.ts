@@ -12,12 +12,17 @@ export const Query = {
   },
   getHousesPerZipCode: async (_: any, args: any) => {
     const date = new Date();
+    console.log(args);
+    const min = args.min || 200_000;
+    const max = args.max || 500_000;
+    if (min > max) throw new Error("check price limits");
     date.setHours(0, 0, 0, 0);
     return House.aggregate([
       {
         $match: {
           createdAt: { $gte: date },
-          zipCode: args.zipCode
+          zipCode: args.zipCode,
+          price: { $gte: min, $lte: max }
         }
       }
     ]);

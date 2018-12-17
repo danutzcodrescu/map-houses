@@ -64,7 +64,7 @@ export class MapService {
         maxZoom: 18,
         id: 'mapbox.light',
         accessToken: environment.mapbox
-      }
+      } as any
     ).addTo(this.map);
     this.map.addLayer(this._markerCluster);
   }

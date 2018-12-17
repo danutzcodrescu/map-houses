@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MapComponent } from './components/map/map.component';
 import { MapService } from './services/map/map.service';
+import { LocalStorageService } from './services/local-storage/local-storage.service';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -18,6 +19,8 @@ import { SelectedHouseComponent } from './components/selected-house/selected-hou
 import { HouseTableComponent } from './components/house-table/house-table.component';
 import { CommuneChartComponent } from './components/commune-chart/commune-chart.component';
 import { NumberOfDaysPipe } from './pipes/number-of-days.pipe';
+import { FilterPriceComponent } from './components/filter-price/filter-price.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,11 +30,13 @@ import { NumberOfDaysPipe } from './pipes/number-of-days.pipe';
     SelectedHouseComponent,
     HouseTableComponent,
     CommuneChartComponent,
-    NumberOfDaysPipe
+    NumberOfDaysPipe,
+    FilterPriceComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     GraphQLModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -39,7 +44,7 @@ import { NumberOfDaysPipe } from './pipes/number-of-days.pipe';
     MatSortModule,
     MatProgressSpinnerModule
   ],
-  providers: [MapService],
+  providers: [MapService, LocalStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

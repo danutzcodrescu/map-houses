@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon",
     "generate": "graphqlgen",
-    "build": "tsc"
+    "build": "rimraf ./dist && tsc && copyfiles -u 1 src/**/*.graphql dist",
+    "start": "node dist/server"
   },
   "author": "Danut Codrescu",
   "license": "MIT",
@@ -27,10 +28,12 @@
     "@types/lodash": "^4.14.117",
     "@types/mongoose": "^5.2.20",
     "@types/morgan": "^1.7.35",
+    "copyfiles": "^2.1.0",
     "dotenv": "^6.1.0",
     "graphql-code-generator": "^0.12.6",
     "graphqlgen": "^0.2.12",
     "nodemon": "^1.18.5",
+    "rimraf": "^2.6.2",
     "ts-node": "^7.0.1"
   }
 }

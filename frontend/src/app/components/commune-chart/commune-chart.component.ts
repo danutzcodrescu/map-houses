@@ -10,7 +10,7 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { switchMap, map, takeUntil } from 'rxjs/operators';
 import { of, Observable, Subject } from 'rxjs';
-import ApexCharts from 'apexcharts';
+import * as ApexCharts from 'apexcharts';
 
 const ZIPCODE = gql`
   {

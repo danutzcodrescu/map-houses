@@ -2,5 +2,6 @@
   "watch": ["src/**/*.ts"],
   "execMap": {
     "ts": "ts-node"
-  }
+  },
+  "ignore": [".git", "node_modules/**/node_modules", "frontend"]
 }
