@@ -46,6 +46,7 @@ const server = new ApolloServer({
 });
 server.applyMiddleware({
   app
+  // TODO: Fix cors stuff after setting everything up on the frontend
   // cors: {
   //   origin: process.env.NOD_ENV === "development" ? "*" : process.env.FRONTEND
   // }
