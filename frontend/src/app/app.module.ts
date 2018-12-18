@@ -13,7 +13,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatTableModule,
   MatSortModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatButtonModule
 } from '@angular/material';
 import { SelectedHouseComponent } from './components/selected-house/selected-house.component';
 import { HouseTableComponent } from './components/house-table/house-table.component';
@@ -42,7 +45,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     MatTableModule,
     MatSortModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule
   ],
   providers: [MapService, LocalStorageService],
   bootstrap: [AppComponent]

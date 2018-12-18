@@ -22,6 +22,13 @@ export const resolvers = {
     selectedHouse: (_, { externalId }, { cache }) => {
       cache.writeData({ data: { selectedHouse: externalId } });
       return externalId;
+    },
+
+    adjustPriceRange: (_, { min, max }, { cache }) => {
+      cache.writeData({
+        data: { priceRange: { min, max, __typename: 'price' } }
+      });
+      return { min, max, __typename: 'price' };
     }
   }
 };

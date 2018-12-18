@@ -5,7 +5,6 @@ import { Observable, of, combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ApolloQueryResult } from 'apollo-client';
 import * as _ from 'lodash';
-import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
 const DASHBOARD_STATUS = gql`
   {
@@ -31,6 +30,15 @@ const SELECTED_HOUSE = gql`
   }
 `;
 
+const PRICE_RANGE = gql`
+  {
+    priceRange @client {
+      min
+      max
+    }
+  }
+`;
+
 const GET_HOUSES_PER_ZIPCODE = gql`
   query GetHousesPerZip($zipCode: Int!, $min: Int, $max: Int) {
     getHousesPerZipCode(zipCode: $zipCode, min: $min, max: $max) {
@@ -52,12 +60,11 @@ export class DashboardComponent implements OnInit {
   isDashboardOpen$: Observable<ApolloQueryResult<boolean>>;
   zipCode$: Observable<number>;
   selectedHouse$: Observable<ApolloQueryResult<string>>;
+  priceRange$: Observable<{ min: number; max: number }>;
   dataSource: Observable<any[]>;
+  priceRange: { min: number; max: number };
 
-  constructor(
-    private apollo: Apollo,
-    private localStorage: LocalStorageService
-  ) {}
+  constructor(private apollo: Apollo) {}
 
   ngOnInit() {
     this.selectedHouse$ = this.apollo
@@ -69,19 +76,21 @@ export class DashboardComponent implements OnInit {
     this.isDashboardOpen$ = this.apollo
       .watchQuery<boolean>({ query: DASHBOARD_STATUS })
       .valueChanges.pipe(map(result => (result.data as any).isDashboardOpen));
+    this.priceRange$ = this.apollo
+      .watchQuery<{ min: number; max: number }>({ query: PRICE_RANGE })
+      .valueChanges.pipe(map((result: any) => result.data.priceRange));
     this.dataSource = combineLatest(
       this.selectedHouse$,
       this.isDashboardOpen$,
-      this.zipCode$
+      this.zipCode$,
+      this.priceRange$
     ).pipe(
-      switchMap(([selectedHouse, isDashboardOpen, zipCode]) => {
+      switchMap(([selectedHouse, isDashboardOpen, zipCode, priceRange]) => {
         if (!selectedHouse && isDashboardOpen && !_.isNaN(zipCode)) {
-          const priceRanges = JSON.parse(
-            this.localStorage.get('priceRange')
-          ) || { min: 200_000, max: 500_000 };
+          this.priceRange = priceRange;
           return this.apollo.query<any[]>({
             query: GET_HOUSES_PER_ZIPCODE,
-            variables: { zipCode, min: priceRanges.min, max: priceRanges.max }
+            variables: { zipCode, min: priceRange.min, max: priceRange.max }
           });
         }
         return of({ data: { getHousesPerZipCode: [] } }) as any;

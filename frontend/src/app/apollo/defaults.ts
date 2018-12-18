@@ -1,5 +1,10 @@
 export const defaults = {
   zip: null,
   isDashboardOpen: false,
-  selectedHouse: null
+  selectedHouse: null,
+  priceRange: {
+    min: JSON.parse(localStorage.getItem('priceRange')).min || 200_000,
+    max: JSON.parse(localStorage.getItem('priceRange')).max || 500_000,
+    __typename: 'price'
+  }
 };

@@ -35,7 +35,7 @@ mongoose
 app.set("port", process.env.PORT || 3000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan("combined"));
+app.use(morgan("dev"));
 
 // Apollo graphql
 const server = new ApolloServer({
@@ -45,13 +45,10 @@ const server = new ApolloServer({
   introspection: process.env.NOD_ENV === "production" ? false : true
 });
 server.applyMiddleware({
-  app,
-  cors: {
-    origin:
-      process.env.NOD_ENV === "development"
-        ? "http://localhost:4200"
-        : process.env.FRONTEND
-  }
+  app
+  // cors: {
+  //   origin: process.env.NOD_ENV === "development" ? "*" : process.env.FRONTEND
+  // }
 });
 
 export default app;

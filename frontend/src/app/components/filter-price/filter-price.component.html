@@ -1,9 +1,27 @@
 <div class="container">
   <form [formGroup]="form" (ngSubmit)="submitHandler()">
-    <label for="min">Min:</label>
-    <input type="number" formControlName="min" id="min" /> <br />
-    <label for="max">Max:</label>
-    <input type="number" formControlName="max" id="max" />
-    <button type="submit">Adjust prices</button>
+    <mat-form-field>
+      <input
+        type="number"
+        matInput
+        formControlName="min"
+        id="min"
+        placeholder="Min"
+      />
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <input
+        type="number"
+        matInput
+        formControlName="max"
+        id="max"
+        placeholder="Max"
+      />
+    </mat-form-field>
+    <br />
+    <button type="submit" mat-raised-button color="primary">
+      Adjust prices
+    </button>
   </form>
 </div>

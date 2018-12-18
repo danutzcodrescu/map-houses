@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
+import { LocalStorageService } from '../../services/local-storage/local-storage.service';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
+const ADJUST_PRICES = gql`
+  mutation AdjustPrices($min: string!, $max: string) {
+    adjustPriceRange(min: $min, max: $max) @client
+  }
+`;
 
 @Component({
   selector: 'app-filter-price',
@@ -12,7 +20,8 @@ export class FilterPriceComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private localStorage: LocalStorageService
+    private localStorage: LocalStorageService,
+    private apollo: Apollo
   ) {}
 
   ngOnInit() {
@@ -38,5 +47,14 @@ export class FilterPriceComponent implements OnInit {
 
   submitHandler() {
     this.localStorage.set('priceRange', JSON.stringify(this.form.value));
+    this.apollo
+      .mutate({
+        mutation: ADJUST_PRICES,
+        variables: {
+          min: this.form.value.min,
+          max: this.form.value.max
+        }
+      })
+      .subscribe();
   }
 }
