@@ -10,7 +10,9 @@ import { Query } from './resolvers/houses.resolvers';
 // Load environment variables from .env file, where API keys and passwords
 dotenv.config();
 
-// Controllers (route handlers)
+const corsOptions = {
+  origin: process.env.FRONTEND_URL
+};
 
 // Create Express server
 const app = express();
@@ -23,9 +25,11 @@ mongoose
     { useNewUrlParser: true }
   )
   .then(() => {
+    // tslint:disable-next-line:no-console
     console.log('connected to db');
   })
-  .catch(err => {
+  .catch((err) => {
+    // tslint:disable-next-line:no-console
     console.log(
       'MongoDB connection error. Please make sure MongoDB is running. ' + err
     );
@@ -45,11 +49,9 @@ const server = new ApolloServer({
   introspection: process.env.NOD_ENV === 'production' ? false : true
 });
 server.applyMiddleware({
-  app
+  app,
   // TODO: Fix cors stuff after setting everything up on the frontend
-  // cors: {
-  //   origin: process.env.NOD_ENV === 'development' ? '*' : process.env.FRONTEND
-  // }
+  cors: corsOptions
 });
 
 export default app;
