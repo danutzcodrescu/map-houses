@@ -10,7 +10,7 @@ export class LocalStorageService {
     localStorage.setItem(key, value);
   }
 
-  get(key: string) {
-    return localStorage.getItem(key);
+  get<T>(key: string): T {
+    return JSON.parse(localStorage.getItem(key));
   }
 }

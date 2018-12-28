@@ -1,14 +1,14 @@
 export interface Offers {
-  zipCode: Number;
-  houses: Number;
+  zipCode: number;
+  houses: number;
 }
 
 export interface House {
-  externalId: String;
-  price: Number;
-  surface: Number;
-  rooms: Number;
-  zipCode: String;
+  externalId: string;
+  price: number;
+  surface: number;
+  rooms: number;
+  zipCode: string;
 }
 
 export interface Context {}

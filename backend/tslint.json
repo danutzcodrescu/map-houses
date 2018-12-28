@@ -1,3 +1,10 @@
 {
-  "extends": "../tslint.json"
+  "extends": "tslint:recommended",
+  "rules": {
+    "quotemark": [true, "single"],
+    "object-literal-sort-keys": false,
+    "interface-name": false,
+    "no-empty-interface": false,
+    "ordered-imports": false
+  }
 }

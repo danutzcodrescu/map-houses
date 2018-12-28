@@ -4,12 +4,12 @@ import {
   ElementRef,
   ViewChild,
   OnDestroy
-} from "@angular/core";
-import { MapService, GetRegions } from "src/app/services/map/map.service";
-import gql from "graphql-tag";
-import { Apollo } from "apollo-angular";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+} from '@angular/core';
+import { MapService, GetRegions } from 'src/app/services/map/map.service';
+import gql from 'graphql-tag';
+import { Apollo } from 'apollo-angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 const GET_REGIONS = gql`
   query getRegions {
@@ -21,12 +21,12 @@ const GET_REGIONS = gql`
 `;
 
 @Component({
-  selector: "app-map",
-  templateUrl: "./map.component.html",
-  styleUrls: ["./map.component.scss"]
+  selector: 'app-map',
+  templateUrl: './map.component.html',
+  styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit, OnDestroy {
-  @ViewChild("map")
+  @ViewChild('map')
   mapElement: ElementRef;
 
   private unsubscribe$ = new Subject();

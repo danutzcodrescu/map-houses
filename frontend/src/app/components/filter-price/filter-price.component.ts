@@ -25,7 +25,9 @@ export class FilterPriceComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const prices = JSON.parse(this.localStorage.get('priceRange')) || {
+    const prices = this.localStorage.get<{ min: number; max: number }>(
+      'priceRange'
+    ) || {
       min: 200_000,
       max: 500_000
     };

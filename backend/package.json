@@ -7,7 +7,8 @@
     "dev": "nodemon",
     "generate": "graphqlgen",
     "build": "rimraf ./dist && tsc && copyfiles -u 1 src/**/*.graphql dist",
-    "start": "node dist/server"
+    "start": "node dist/server",
+    "lint": "tslint --project ."
   },
   "author": "Danut Codrescu",
   "license": "MIT",
@@ -34,6 +35,7 @@
     "graphqlgen": "^0.2.12",
     "nodemon": "^1.18.5",
     "rimraf": "^2.6.2",
-    "ts-node": "^7.0.1"
+    "ts-node": "^7.0.1",
+    "tslint": "^5.12.0"
   }
 }

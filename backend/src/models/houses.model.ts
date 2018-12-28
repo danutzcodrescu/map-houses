@@ -7,9 +7,9 @@ const schema = new mongoose.Schema(
     surface: Number,
     rooms: Number,
     zipCode: Number,
-    url: String
+    url: String,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 const House = mongoose.model('House', schema);
 

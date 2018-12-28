@@ -1,4 +1,4 @@
-import House from "../models/houses.model";
+import House from '../models/houses.model';
 
 export const Query = {
   getRegions: async () => {
@@ -6,25 +6,26 @@ export const Query = {
     date.setHours(0, 0, 0, 0);
     return House.aggregate([
       { $match: { createdAt: { $gte: date } } },
-      { $group: { _id: "$zipCode", count: { $sum: 1 } } },
-      { $project: { _id: 0, zipCode: "$_id", houses: "$count" } }
+      { $group: { _id: '$zipCode', count: { $sum: 1 } } },
+      { $project: { _id: 0, zipCode: '$_id', houses: '$count' } },
     ]).exec();
   },
   getHousesPerZipCode: async (_: any, args: any) => {
     const date = new Date();
-    console.log(args);
     const min = args.min || 200_000;
     const max = args.max || 500_000;
-    if (min > max) throw new Error("check price limits");
+    if (min > max) {
+      throw new Error('check price limits');
+    }
     date.setHours(0, 0, 0, 0);
     return House.aggregate([
       {
         $match: {
           createdAt: { $gte: date },
           zipCode: args.zipCode,
-          price: { $gte: min, $lte: max }
-        }
-      }
+          price: { $gte: min, $lte: max },
+        },
+      },
     ]);
   },
 
@@ -33,14 +34,13 @@ export const Query = {
     date.setHours(0, 0, 0, 0);
     const houseData: any = House.findOne({
       externalId: args.externalId,
-      createdAt: { $gte: date }
+      createdAt: { $gte: date },
     });
     const priceData: any = House.find(
       { externalId: args.externalId },
-      { _id: 0, price: 1, createdAt: 1 }
+      { _id: 0, price: 1, createdAt: 1 },
     );
     const [house, prices] = await Promise.all([houseData, priceData]);
-    console.log(house);
     house.prices = prices;
     return house;
   },
@@ -49,66 +49,66 @@ export const Query = {
     const avgs: any = House.aggregate([
       {
         $match: {
-          zipCode: args.zipCode
-        }
+          zipCode: args.zipCode,
+        },
       },
       {
         $group: {
           _id: {
             month: {
-              $month: "$createdAt"
+              $month: '$createdAt',
             },
             day: {
-              $dayOfMonth: "$createdAt"
+              $dayOfMonth: '$createdAt',
             },
             year: {
-              $year: "$createdAt"
-            }
+              $year: '$createdAt',
+            },
           },
           avg_price: {
-            $avg: "$price"
+            $avg: '$price',
           },
           avg_surface: {
-            $avg: "$surface"
+            $avg: '$surface',
           },
           avg_nb_rooms: {
-            $avg: "$rooms"
-          }
-        }
-      }
+            $avg: '$rooms',
+          },
+        },
+      },
     ]);
     const onMarket: any = House.aggregate([
       {
         $match: {
-          zipCode: args.zipCode
-        }
+          zipCode: args.zipCode,
+        },
       },
       {
         $group: {
-          _id: "$externalId",
-          first: { $first: "$createdAt" },
-          last: { $last: "$createdAt" }
-        }
+          _id: '$externalId',
+          first: { $first: '$createdAt' },
+          last: { $last: '$createdAt' },
+        },
       },
       {
         $addFields: {
-          difference: { $subtract: ["$last", "$first"] }
-        }
+          difference: { $subtract: ['$last', '$first'] },
+        },
       },
       {
         $group: {
           _id: null,
-          avg: { $avg: "$difference" }
-        }
-      }
+          avg: { $avg: '$difference' },
+        },
+      },
     ]);
     const [avgsResult, onMarketResult] = await Promise.all([avgs, onMarket]);
     return {
       dailyAverage: avgsResult.map((elem: any) => ({
         ...elem,
-        date: new Date(elem._id.year, elem._id.month, elem._id.day)
+        date: new Date(elem._id.year, elem._id.month, elem._id.day),
       })),
-      onMarketAvg: onMarketResult[0].avg
+      onMarketAvg: onMarketResult[0].avg,
     };
-  }
+  },
 };
