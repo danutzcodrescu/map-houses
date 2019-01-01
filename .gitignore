@@ -40,3 +40,4 @@ Thumbs.db
 environments
 backend/.env
 dist
+backend/now.json
